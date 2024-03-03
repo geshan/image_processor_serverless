@@ -1,0 +1,52 @@
+main:
+    params: [event]
+    steps:
+    - checkMessage:
+        switch:
+            - condition: ${"data" in event and "message" in event.data and "data" in event.data.message} 
+              next: decodeData
+    - decodeData:
+        assign:
+            - raw_message: ${base64.decode(event.data.message.data)}
+            - decoded_message: ${text.decode(raw_message)}
+    - findKey:
+        switch:
+            - condition: ${decoded_message == "gcp" or decoded_message == "google"}
+              steps:
+                - assignGCPKey:
+                    assign:
+                        - key: "B2"
+              next: getFromSheet
+            - condition: ${decoded_message == "aws" or decoded_message == "amazon"}
+              steps:
+                - assignAWSKey:
+                    assign:
+                        - key: "B3"
+              next: getFromSheet
+            - condition: ${decoded_message == "azure" or decoded_message == "microsoft"}
+              steps:
+                - assignAzureKey:
+                    assign:
+                        - key: "B4"
+              next: getFromSheet
+    - getFromSheet:
+        call: googleapis.sheets.v4.spreadsheets.values.get
+        args:
+            spreadsheetId: "sheet_id" #replace with actual sheet_id
+            range: ${key}
+        result: value
+    - countCalculater:
+        assign:
+            - count: ${int(value.values[0][0]) + 1}
+    - updateSpreadsheet:
+        call: googleapis.sheets.v4.spreadsheets.values.update
+        args:
+            spreadsheetId: "sheet_id" #replace with actual sheet_id
+            range: ${key}
+            valueInputOption: RAW
+            includeValuesInResponse:
+            body:
+                values:
+                - ${[count]}
+    - returnOutput:
+        return: "SUCCESS"
