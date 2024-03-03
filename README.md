@@ -15,3 +15,14 @@ As part of the talk Serverlessing like a pro, I am presenting a demo in GCP that
 <img width="384" alt="image" src="https://github.com/Lovee93/image_processor_serverless/assets/6823402/c2abbca3-09f1-4430-a650-583deed96244">
 
 The code for the workflow is within the final repo called `cloud-workflow`.
+
+## References
+
+ - [Google sheets API](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get)
+ - [Read from eventarc trigger in cloud workflow](https://cloud.google.com/blog/products/application-modernization/process-incoming-data-with-cloud-workflows)
+ - [Workflow Connector for Google Sheets](https://cloud.google.com/workflows/docs/reference/googleapis/sheets/Overview)
+ - [Workflow Connector for Pub/Sub](https://cloud.google.com/workflows/docs/samples/workflows-connector-pubsub?hl=en)
+ - [Cloud Vision API - Github sample](https://github.com/GoogleCloudPlatform/nodejs-docs-samples/blob/4892dff94ea50572e2465469f1b76fbbe682e4c1/vision/detect.js#L160)
+ - [Image processing tutorial](https://cloud.google.com/run/docs/tutorials/image-processing)
+ - [Cloud Vision API - How-to guide](https://cloud.google.com/vision/docs/ocr)
+ - [Publish messages to topics](https://cloud.google.com/pubsub/docs/publisher#node.js_2)
